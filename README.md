@@ -1,3 +1,25 @@
+#Theatre booking system
+A test to develop a system to check booking requests for a Theatre.
+
+Development in progress - not yet completed
+
+## Technologies used
+|Technology                 |Used for                       |
+|--------------------------|--------------------------------|
+|Ruby 2.1.2                |Programming language            |
+|Rspec                     |Test Driven Development - unit testing  |
+
+## How to run the program:
+
+### From your terminal:
+
+  $ git clone git@github.com:odelevingne/booking.git
+
+  $ cd booking
+
+### To run the unit tests:
+  $ rspec
+
 ## Logic:
 - Obtain a booking request
 - Check that all seats are on the same row
