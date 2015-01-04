@@ -1,7 +1,15 @@
 class Seat
 
+  def initialize
+    @booked = false
+  end
+
   def booked?
-    false
+    @booked
+  end
+
+  def book!
+    @booked = true
   end
 
 end
