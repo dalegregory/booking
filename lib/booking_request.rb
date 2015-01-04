@@ -19,4 +19,12 @@ class BookingRequest
     @booking_info[:startrow] == @booking_info[:endrow]
   end
 
+  def ascending_order?
+    @booking_info[:firstseat] <= @booking_info[:lastseat]
+  end
+
+  def number_of_seats
+    @booking_info[:lastseat] - @booking_info[:firstseat] + 1
+  end
+
 end

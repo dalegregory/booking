@@ -30,4 +30,18 @@ describe 'Booking Request' do
     expect(valid_request.row).to be 77
   end
 
+  it 'can check if the seats requested are in ascending order' do
+    wrong_seat_order = BookingRequest.new({ :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 19 })
+    expect(wrong_seat_order.ascending_order?).to be false
+    expect(valid_request.ascending_order?).to be true
+  end
+
+  it 'can check how many seats have bee requested' do
+    expect(valid_request.number_of_seats).to eq 2
+  end
+
+  it 'can knows the last seat number' do
+    expect(valid_request.last_seat).to be 24
+  end
+
 end
