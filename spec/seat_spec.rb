@@ -13,4 +13,11 @@ describe 'Seat' do
     expect(seat).to be_booked
   end
 
+  it 'can be unbooked' do
+    seat = Seat.new
+    seat.book!
+    seat.unbook!
+    expect(seat).not_to be_booked
+  end
+
 end
