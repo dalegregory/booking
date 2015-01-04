@@ -17,5 +17,11 @@ describe 'Cinema' do
     expect(cinema.row_count).to eq 75
   end
 
+  it 'can be created with any number of seats per row' do
+    cinema = Cinema.new(75, 25)
+    expect(cinema.seats_per_row).to eq 25
+    expect(cinema.row_count).to eq 75
+  end
+
 
 end
