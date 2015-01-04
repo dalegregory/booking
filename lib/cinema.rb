@@ -14,4 +14,6 @@ class Cinema
     @rows[0].seat_count
   end
 
+  
+
 end
