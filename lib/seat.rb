@@ -1,7 +1,7 @@
 class Seat
 
   def initialize
-    @booked = false
+    unbook!
   end
 
   def booked?
@@ -10,10 +10,12 @@ class Seat
 
   def book!
     @booked = true
+    self
   end
 
   def unbook!
     @booked = false
+    self
   end
 
 end
