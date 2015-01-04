@@ -2,7 +2,10 @@ require 'booking_request'
 
 describe 'Booking Request' do
 
-  let(:valid_request) { BookingRequest.new({ :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 24 }) }
+  let(:valid_request)     { BookingRequest.new( { :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 24 })   }
+  let(:invalid_id)        { BookingRequest.new( { :id => -1, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 24 })  }
+  let(:split_rows)        { BookingRequest.new( { :id => 1, :startrow => 77, :firstseat => 23, :endrow => 78, :lastseat => 24 })   }
+  let(:wrong_seat_order)  { BookingRequest.new( { :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 19 })   }
 
   it 'is initialized with 5 key value pairs' do
     missing_fields = BookingRequest.new({ :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77 })
@@ -11,27 +14,20 @@ describe 'Booking Request' do
   end
 
   it 'can check if it has a valid id of 0 or above' do
-    invalid_id = BookingRequest.new({ :id => -1, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 24 })
     expect(valid_request.valid_id?).to be true
     expect(invalid_id.valid_id?).to be false
   end
 
   it 'can check if the booking is for a single row' do
-    split_rows = BookingRequest.new({ :id => 1, :startrow => 77, :firstseat => 23, :endrow => 78, :lastseat => 24 })
     expect(split_rows.single_row?).to be false
     expect(valid_request.single_row?).to be true
   end
-
-  # it 'can check if the rows exist in the cinema' do
-  #   invalid_rows = BookingRequest.new({ :id => 1, :startrow => 101, :firstseat => 23, :endrow => 101, :lastseat => 24 })
-  # end
 
   it 'can check which row the booking is for' do
     expect(valid_request.row).to be 77
   end
 
   it 'can check if the seats requested are in ascending order' do
-    wrong_seat_order = BookingRequest.new({ :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 19 })
     expect(wrong_seat_order.ascending_order?).to be false
     expect(valid_request.ascending_order?).to be true
   end
@@ -41,7 +37,14 @@ describe 'Booking Request' do
   end
 
   it 'can knows the last seat number' do
-    expect(valid_request.last_seat).to be 24
+    expect(valid_request.set_last_seat).to eq 24
+  end
+
+  it 'can check if all the validation tests pass' do
+    expect(valid_request.valid?).to be true
+    expect(invalid_id.valid?).to be false
+    expect(split_rows.valid?).to be false
+    expect(wrong_seat_order.valid?).to be false
   end
 
 end

@@ -1,6 +1,6 @@
 class BookingRequest
 
-  attr_reader :row
+  attr_reader :row, :lastseat, :seats
 
   def initialize(hash)
     @booking_info = hash
@@ -24,7 +24,11 @@ class BookingRequest
   end
 
   def number_of_seats
-    @booking_info[:lastseat] - @booking_info[:firstseat] + 1
+    @seats = @booking_info[:lastseat] - @booking_info[:firstseat] + 1
+  end
+
+  def set_last_seat
+    @lastseat = @booking_info[:lastseat]
   end
 
 end
