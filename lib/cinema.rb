@@ -6,7 +6,7 @@ class Cinema
     @rows = Array.new(rows, Row.new)
   end
 
-  def length
+  def row_count
     @rows.length
   end
 
