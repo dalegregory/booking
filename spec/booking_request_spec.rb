@@ -22,4 +22,12 @@ describe 'Booking Request' do
     expect(valid_request.single_row?).to be true
   end
 
+  # it 'can check if the rows exist in the cinema' do
+  #   invalid_rows = BookingRequest.new({ :id => 1, :startrow => 101, :firstseat => 23, :endrow => 101, :lastseat => 24 })
+  # end
+
+  it 'can check which row the booking is for' do
+    expect(valid_request.row).to be 77
+  end
+
 end

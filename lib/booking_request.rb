@@ -1,7 +1,10 @@
 class BookingRequest
 
+  attr_reader :row
+
   def initialize(hash)
     @booking_info = hash
+    @row = hash[:startrow]
   end
 
   def necessary_fields?
