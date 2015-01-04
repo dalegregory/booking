@@ -12,4 +12,8 @@ class BookingRequest
     @booking_info[:id] >= 0
   end
 
+  def single_row?
+    @booking_info[:startrow] == @booking_info[:endrow]
+  end
+
 end
