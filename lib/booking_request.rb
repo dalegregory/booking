@@ -31,4 +31,8 @@ class BookingRequest
     @lastseat = @booking_info[:lastseat]
   end
 
+  def valid?
+    necessary_fields? && valid_id? && single_row? && ascending_order?
+  end
+
 end
