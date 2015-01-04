@@ -23,21 +23,13 @@ describe 'Booking Request' do
     expect(valid_request.single_row?).to be true
   end
 
-  it 'can check which row the booking is for' do
-    expect(valid_request.row).to be 77
-  end
-
   it 'can check if the seats requested are in ascending order' do
     expect(wrong_seat_order.ascending_order?).to be false
     expect(valid_request.ascending_order?).to be true
   end
 
-  it 'can check how many seats have bee requested' do
+  it 'can check how many seats have been requested' do
     expect(valid_request.number_of_seats).to eq 2
-  end
-
-  it 'can knows the last seat number' do
-    expect(valid_request.set_last_seat).to eq 24
   end
 
   it 'can check if all the validation tests pass' do

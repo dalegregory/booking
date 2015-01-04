@@ -1,10 +1,7 @@
 class BookingRequest
 
-  attr_reader :row, :lastseat, :seats
-
   def initialize(hash)
-    @booking_info = hash
-    @row = hash[:startrow]
+    @booking_info = hash    
   end
 
   def necessary_fields?
@@ -25,10 +22,6 @@ class BookingRequest
 
   def number_of_seats
     @seats = @booking_info[:lastseat] - @booking_info[:firstseat] + 1
-  end
-
-  def set_last_seat
-    @lastseat = @booking_info[:lastseat]
   end
 
   def valid?
