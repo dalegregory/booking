@@ -14,6 +14,8 @@ class Cinema
     @rows[0].seat_count
   end
 
-  
+  def seat_booked?(row, seat)
+    @rows[row-1].seats[seat-1].booked?
+  end
 
 end

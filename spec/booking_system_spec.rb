@@ -1,9 +1,9 @@
 require 'booking_system'
+require 'cinema'
 
 describe 'BookingSystem' do
 
-  let(:cinema)                 { double :cinema,  :row_count => 50,
-                                                  :seats_per_row => 100 }
+  let(:cinema)                 { Cinema.new  }                
   let(:booking_request_reader) { double :booking_request_reader, :bookings => [{  :id => 0, 
                                                                                   :startrow => 77,
                                                                                   :firstseat => 23,
@@ -28,13 +28,15 @@ describe 'BookingSystem' do
   end
 
   it 'knows how many rows are in the cinema' do
-    expect(booking_system.last_row).to eq 50
+    expect(booking_system.last_row).to eq 100
   end
 
   it 'knows how many seats are in each row' do
-    expect(booking_system.last_seat).to eq 100
+    expect(booking_system.last_seat).to eq 50
   end
 
-
+  it 'can check the status of a specified seat' do
+    expect(booking_system.seat_booked?(2,1)).to eq false 
+  end
 
 end

@@ -27,4 +27,12 @@ describe 'Cinema:' do
 
   end
 
+  context 'checking bookings' do
+
+    it 'can check the state of a seat' do
+      expect(cinema.seat_booked?(2,0)).to eq false
+    end
+
+  end
+
 end
