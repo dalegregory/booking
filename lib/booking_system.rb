@@ -13,11 +13,11 @@ class BookingSystem
     MAXIMUM_BOOKING
   end
 
-  def rows
+  def last_row
     cinema.row_count
   end
 
-  def seats
+  def last_seat
     cinema.seats_per_row
   end
 
