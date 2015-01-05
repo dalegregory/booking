@@ -31,4 +31,8 @@ describe 'BookingSystem' do
     expect(booking_system.rows).to eq 50
   end
 
+  it 'knows how many seats are in each row' do
+    expect(booking_system.seats).to eq 100
+  end
+
 end

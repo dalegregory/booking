@@ -17,4 +17,8 @@ class BookingSystem
     cinema.row_count
   end
 
+  def seats
+    cinema.seats_per_row
+  end
+
 end
