@@ -6,4 +6,11 @@ class BookingRequestReader
     booking_request = Hash[keys.zip array]
   end
 
+  def process_file(directory)
+    file = File.open(directory, 'r')
+    @bookings = []
+    file.each {|line| @bookings << line}
+    @bookings
+  end
+
 end
