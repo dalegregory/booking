@@ -18,4 +18,8 @@ class BookingRequestReader
     @bookings.map! {|booking| process_booking(booking)}
   end
 
+  def create_bookings
+    @bookings.map! { |booking| booking = BookingRequest.new(booking) }
+  end
+
 end

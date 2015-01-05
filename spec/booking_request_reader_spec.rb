@@ -33,4 +33,12 @@ describe 'BookingRequestReader' do
     # expect(booking_request_reader.bookings.first.class).to eq BookingRequest                                                                        
   end
 
+  it 'turns each formatted booking into a BookingRequest' do
+    booking_request_reader.process_file('./data/test_booking_requests')
+    booking_request_reader.format_bookings
+    booking_request_reader.create_bookings
+    expect(booking_request_reader.bookings.first.class).to eq BookingRequest
+    expect(booking_request_reader.bookings.last.class).to eq BookingRequest
+  end
+ 
 end
