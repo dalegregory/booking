@@ -14,11 +14,21 @@ describe 'BookingSystem' do
                                                                                   :firstseat => 41,
                                                                                   :endrow => 64,
                                                                                   :lastseat => 44 }] }
+  let(:booking_system) { BookingSystem.new(cinema, booking_request_reader) }
+                                                                                
+
 
   it 'is intialized with a Cinema and a BookingRequestReader' do
-    booking_system = BookingSystem.new(cinema, booking_request_reader)
     expect(booking_system.cinema).to eq cinema
     expect(booking_system.booking_reader).to eq booking_request_reader
+  end
+
+  it 'has a MAXIMUM_BOOKING' do
+    expect(booking_system.max_booking).to eq 5
+  end
+
+  it 'knows how many rows are in the cinema' do
+    expect(booking_system.rows).to eq 50
   end
 
 end
