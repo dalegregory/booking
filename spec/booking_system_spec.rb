@@ -1,21 +1,18 @@
 require 'booking_system'
+require 'booking_request_reader'
 require 'cinema'
 
 describe 'BookingSystem' do
 
   let(:cinema)                 { Cinema.new  }                
-  let(:booking_request_reader) { double :booking_request_reader, :bookings => [{  :id => 0, 
-                                                                                  :startrow => 77,
-                                                                                  :firstseat => 23,
-                                                                                  :endrow => 77,
-                                                                                  :lastseat => 24 },
-                                                                                { :id => 1, 
-                                                                                  :startrow => 63,
-                                                                                  :firstseat => 41,
-                                                                                  :endrow => 64,
-                                                                                  :lastseat => 44 }] }
+  let(:booking_request_reader) { BookingRequestReader.new }
   let(:booking_system) { BookingSystem.new(cinema, booking_request_reader) }
-                                                                                
+  
+  before(:each) do 
+    booking_request_reader.process_file("./data/test_booking_requests")
+    booking_request_reader.format_bookings
+    booking_request_reader.create_bookings 
+  end                                                                           
 
 
   it 'is intialized with a Cinema and a BookingRequestReader' do
@@ -42,11 +39,22 @@ describe 'BookingSystem' do
     expect(booking_system.seat_booked?(4,3)).to eq true
   end
 
-  it 'can book a seat' do
-    expect(booking_system.seat_booked?(1,0)).to be false
-    booking_system.book_seat(1,0)
-    expect(booking_system.seat_booked?(1,0)).to be true
+  it 'can check the validity of a BookingRequest' do
+    expect(booking_system.is_request_valid?(0)).to be true
+    expect(booking_system.is_request_valid?(1)).to be false
   end
+
+  # it 'can book a seat' do
+  #   expect(booking_system.seat_booked?(1,4)).to be false
+  #   booking_system.book_seat(1,4)
+  #   expect(booking_system.seat_booked?(1,4)).to be true
+  # end
+
+  # it 'can only book a seat if the seat is unbooked' do
+  #   booking_system.book_seat(1,4)
+  #   expect(booking_system.seat_booked?(1,4)).to be true
+  #   expect(booking_system.book_seat(1,4))
+  # end
 
   # it 'can check the validity of a seat' do
 
