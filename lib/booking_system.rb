@@ -25,4 +25,8 @@ class BookingSystem
     cinema.seat_booked?(row, seat)
   end
 
+  def book_seat(row, seat)
+    cinema.rows[row-1].seats[seat-1].book!
+  end
+
 end
