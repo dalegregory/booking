@@ -49,6 +49,10 @@ describe 'BookingSystem' do
     expect(booking_system.within_seat_limit?(2)).to be false
   end
 
+  it 'can check if a BookingRequest is within the row limit' do
+    expect(booking_system.within_row_limit?(1)).to be true
+    expect(booking_system.within_row_limit?(3)).to be false
+  end
   # it 'can book a seat' do
   #   expect(booking_system.seat_booked?(1,4)).to be false
   #   booking_system.book_seat(1,4)
