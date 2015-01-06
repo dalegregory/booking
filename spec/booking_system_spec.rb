@@ -7,7 +7,8 @@ describe 'BookingSystem' do
   let(:cinema)                  { Cinema.new  }                
   let(:booking_request_reader)  { BookingRequestReader.new }
   let(:booking_system)          { BookingSystem.new(cinema, booking_request_reader) }
-  
+  let(:valid_booking)           { double :booking_request, :valid? => true, :seats => ({ :row => 77, :seats => [23,24]})}
+
   before(:each) do 
     booking_request_reader.process_file("./data/test_booking_requests")
     booking_request_reader.format_bookings
@@ -60,10 +61,12 @@ describe 'BookingSystem' do
   end
 
   it 'can check the if all the seats requested are unbooked' do
-    expect(booking_system.all_seats_free?(0)).to be true
+    expect(booking_system.all_seats_free?(valid_booking)).to be true
+    cinema.rows[77].seats[23].book!
+    expect(booking_system.all_seats_free?(valid_booking)).to be false
   end
 
-  
+
   # it 'can book a seat' do
   #   expect(booking_system.seat_booked?(1,4)).to be false
   #   booking_system.book_seat(1,4)
