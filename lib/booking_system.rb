@@ -37,6 +37,10 @@ class BookingSystem
     last_row >= booking_reader.bookings[booking_id].booking_info[:endrow]
   end
 
+  def within_max?(booking_id)
+    MAXIMUM_BOOKING >= booking_reader.bookings[booking_id].number_of_seats
+  end
+
   # def book_seat(row, seat)
   #   cinema.rows[row-1].seats[seat-1].book!
   # end

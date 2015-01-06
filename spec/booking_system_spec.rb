@@ -4,9 +4,9 @@ require 'cinema'
 
 describe 'BookingSystem' do
 
-  let(:cinema)                 { Cinema.new  }                
-  let(:booking_request_reader) { BookingRequestReader.new }
-  let(:booking_system) { BookingSystem.new(cinema, booking_request_reader) }
+  let(:cinema)                  { Cinema.new  }                
+  let(:booking_request_reader)  { BookingRequestReader.new }
+  let(:booking_system)          { BookingSystem.new(cinema, booking_request_reader) }
   
   before(:each) do 
     booking_request_reader.process_file("./data/test_booking_requests")
@@ -52,6 +52,11 @@ describe 'BookingSystem' do
   it 'can check if a BookingRequest is within the row limit' do
     expect(booking_system.within_row_limit?(1)).to be true
     expect(booking_system.within_row_limit?(3)).to be false
+  end
+
+  it 'can check if a BookingRequest is within the MAXIMUM_BOOKING limit' do
+    expect(booking_system.within_max?(1)).to be true
+    expect(booking_system.within_max?(4)).to be false
   end
   # it 'can book a seat' do
   #   expect(booking_system.seat_booked?(1,4)).to be false
