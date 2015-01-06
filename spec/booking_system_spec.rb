@@ -39,9 +39,14 @@ describe 'BookingSystem' do
     expect(booking_system.seat_booked?(4,3)).to eq true
   end
 
-  it 'can check the validity of a BookingRequest' do
+  it 'can check internal validity of a BookingRequest' do
     expect(booking_system.is_request_valid?(0)).to be true
     expect(booking_system.is_request_valid?(1)).to be false
+  end
+
+  it 'can check the if a BookingRequest is within the seat limit' do
+    expect(booking_system.within_seat_limit?(1)).to be true
+    expect(booking_system.within_seat_limit?(2)).to be false
   end
 
   # it 'can book a seat' do

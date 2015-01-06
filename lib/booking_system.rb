@@ -29,6 +29,10 @@ class BookingSystem
     booking_reader.bookings[booking_id].valid?
   end
 
+  def within_seat_limit?(booking_id)
+    last_seat >= booking_reader.bookings[booking_id].booking_info[:lastseat]
+  end
+
   # def book_seat(row, seat)
   #   cinema.rows[row-1].seats[seat-1].book!
   # end

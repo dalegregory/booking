@@ -1,5 +1,7 @@
 class BookingRequest
 
+  attr_accessor :booking_info
+
   def initialize(hash)
     @booking_info = hash    
   end

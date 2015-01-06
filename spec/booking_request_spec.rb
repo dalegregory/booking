@@ -39,4 +39,8 @@ describe 'Booking Request' do
     expect(wrong_seat_order.valid?).to be false
   end
 
+  it 'can access the booking info' do
+    expect(valid_request.booking_info).to eq ({ :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 24 })
+  end
+
 end
