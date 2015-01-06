@@ -12,4 +12,9 @@ describe 'Row' do
     expect(row.seat_count).to eq 75
   end
 
+  it 'each seat initialized in the row are seperate instances' do
+    row = Row.new
+    expect(row.seats[2]).not_to eq row.seats[3]
+  end
+
 end

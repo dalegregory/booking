@@ -25,6 +25,10 @@ describe 'Cinema:' do
       expect(cinema.row_count).to eq 75
     end
 
+    it 'each row initialized is a new instance of Row' do
+      expect(cinema.rows[1]).not_to eq cinema.rows[2]
+    end
+
   end
 
   context 'checking bookings' do

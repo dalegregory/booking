@@ -3,7 +3,9 @@ class Cinema
   attr_reader :rows
 
   def initialize(rows = 100, seats = 50)
-    @rows = Array.new(rows, Row.new(seats))
+    @rows = []
+    rows.times { @rows << Row.new(seats) }
+    # @rows = Array.new(rows, Row.new(seats))
   end
 
   def row_count

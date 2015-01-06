@@ -36,7 +36,16 @@ describe 'BookingSystem' do
   end
 
   it 'can check the status of a specified seat' do
-    expect(booking_system.seat_booked?(2,1)).to eq false 
+    # cinema.rows[5].seats[5].book!
+    # cinema.rows[4].seats[4].unbook!
+
+    # # cinema.rows[4].seats[4].book!
+    # # expect(booking_system.seat_booked?(2,1)).to eq false
+    # puts cinema.rows[5].seats
+    # puts cinema.rows[4].seats[4]
   end
+
+  # it ''
+
 
 end
