@@ -32,8 +32,8 @@ class BookingRequest
 
   def seats
     if valid?
-      array = (@booking_info[:firstseat]..@booking_info[:lastseat]).to_a
-      { :row => @booking_info[:startrow], :seats => array }
+      range = (@booking_info[:firstseat]..@booking_info[:lastseat])
+      { :row => @booking_info[:startrow], :seats => range }
     end
   end
 
