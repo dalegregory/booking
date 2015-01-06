@@ -41,6 +41,10 @@ class BookingSystem
     MAXIMUM_BOOKING >= booking_reader.bookings[booking_id].number_of_seats
   end
 
+  def all_seats_free?(booking_id)
+    booking_reader.bookings[booking_id].booking_info[:]
+  end
+
   # def book_seat(row, seat)
   #   cinema.rows[row-1].seats[seat-1].book!
   # end

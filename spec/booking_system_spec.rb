@@ -58,6 +58,12 @@ describe 'BookingSystem' do
     expect(booking_system.within_max?(1)).to be true
     expect(booking_system.within_max?(4)).to be false
   end
+
+  it 'can check the if all the seats requested are unbooked' do
+    expect(booking_system.all_seats_free?(0)).to be true
+  end
+
+  
   # it 'can book a seat' do
   #   expect(booking_system.seat_booked?(1,4)).to be false
   #   booking_system.book_seat(1,4)

@@ -43,4 +43,8 @@ describe 'Booking Request' do
     expect(valid_request.booking_info).to eq ({ :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 24 })
   end
 
+  it 'knows the seats it wants to book' do
+    expect(valid_request.seats).to eq ({ :row => 77, :seats => [23,24] })
+  end
+
 end

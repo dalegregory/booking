@@ -30,4 +30,11 @@ class BookingRequest
     necessary_fields? && valid_id? && single_row? && ascending_order?
   end
 
+  def seats
+    if valid?
+      array = (@booking_info[:firstseat]..@booking_info[:lastseat]).to_a
+      { :row => @booking_info[:startrow], :seats => array }
+    end
+  end
+
 end
