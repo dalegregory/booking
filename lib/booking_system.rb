@@ -42,18 +42,22 @@ class BookingSystem
   end
 
   def all_seats_free?(booking_id)
-    booking_hash = booking_reader.bookings[booking_id].seats
+    booking_hash = booking_reader.bookings[booking_id].final_info
     seats = cinema.rows[booking_hash[:row]].seats[booking_hash[:seats]]
     seats.all? { |seat| seat.booked? == false }
   end
 
-  def book_seat(row, seat)
-    seat_to_book = cinema.rows[row-1].seats[seat-1]
-    if seat_to_book.booked? == false
-      seat_to_book.book! 
-    else
-      false
-    end
-  end
+  # def no_single_seats?(booking_id)
+  #    = booking_reader.bookings[booking_id].seats
+  # end
+
+  # def book_seat(row, seat)
+  #   seat_to_book = cinema.rows[row-1].seats[seat-1]
+  #   if seat_to_book.booked? == false
+  #     seat_to_book.book! 
+  #   else
+  #     false
+  #   end
+  # end
 
 end

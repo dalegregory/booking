@@ -1,0 +1,6 @@
+require 'seat'
+require 'row'
+require 'cinema'
+require 'booking_system'
+require 'booking_request_reader'
+require 'booking_request'

@@ -1,9 +1,10 @@
 class BookingRequest
 
-  attr_accessor :booking_info
+  attr_accessor :booking_info, :final_info
 
   def initialize(hash)
-    @booking_info = hash    
+    @booking_info = hash
+    seat_info  
   end
 
   def necessary_fields?
@@ -30,10 +31,10 @@ class BookingRequest
     necessary_fields? && valid_id? && single_row? && ascending_order?
   end
 
-  def seats
+  def seat_info
     if valid?
       range = (@booking_info[:firstseat]..@booking_info[:lastseat])
-      { :row => @booking_info[:startrow], :seats => range }
+      @final_info = { :row => @booking_info[:startrow], :seats => range }
     end
   end
 
