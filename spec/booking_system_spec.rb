@@ -7,7 +7,12 @@ describe 'BookingSystem' do
   let(:cinema)                  { Cinema.new  }                
   let(:booking_request_reader)  { BookingRequestReader.new }
   let(:booking_system)          { BookingSystem.new(cinema, booking_request_reader) }
-  let(:valid_booking)           { double :booking_request, :valid? => true, :seats => ({ :row => 77, :seats => 23..24})}
+  let(:valid_booking)           { double :booking_request,  :valid? => true, 
+                                                            :seats => ({ :row => 77, :seats => 23..24}), 
+                                                            :number_of_seats => 2   }
+  let(:invalid_booking)         { double :booking_request,  :valid? => false, 
+                                                            :seats => ({ :row => 101, :seats => 49..55}), 
+                                                            :number_of_seats => 7 } 
 
   before(:each) do 
     booking_request_reader.process_file("./data/test_booking_requests")
@@ -44,30 +49,30 @@ describe 'BookingSystem' do
     expect(booking_system.seat_booked?(4,3)).to eq true
   end
 
-  it 'can check internal validity of a BookingRequest' do
-    expect(booking_system.is_request_valid?(0)).to be true
-    expect(booking_system.is_request_valid?(1)).to be false
-  end
+  # it 'can check internal validity of a BookingRequest' do
+  #   expect(booking_system.is_request_valid?(valid_booking)).to be true
+  #   # expect(booking_system.is_request_valid?(1)).to be false
+  # end
 
   it 'can check the if a BookingRequest is within the seat limit' do
-    expect(booking_system.within_seat_limit?(1)).to be true
-    expect(booking_system.within_seat_limit?(2)).to be false
+    expect(booking_system.within_seat_limit?(valid_booking)).to be true
+    expect(booking_system.within_seat_limit?(invalid_booking)).to be false
   end
 
   it 'can check if a BookingRequest is within the row limit' do
-    expect(booking_system.within_row_limit?(1)).to be true
-    expect(booking_system.within_row_limit?(3)).to be false
+    expect(booking_system.within_row_limit?(valid_booking)).to be true
+    expect(booking_system.within_row_limit?(invalid_booking)).to be false
   end
 
   it 'can check if a BookingRequest is within the MAXIMUM_BOOKING limit' do
-    expect(booking_system.within_max?(1)).to be true
-    expect(booking_system.within_max?(4)).to be false
+    expect(booking_system.within_max?(valid_booking)).to be true
+    expect(booking_system.within_max?(invalid_booking)).to be false
   end
 
   it 'can check the if all the seats requested are unbooked' do
-    expect(booking_system.all_seats_free?(0)).to be true
+    expect(booking_system.all_seats_free?(valid_booking)).to be true
     cinema.rows[77].seats[23].book!
-    expect(booking_system.all_seats_free?(0)).to be false
+    expect(booking_system.all_seats_free?(valid_booking)).to be false
   end
 
   # it 'can make sure there are no single seats left' do

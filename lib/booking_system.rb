@@ -2,15 +2,12 @@ class BookingSystem
 
   MAXIMUM_BOOKING = 5
 
-  attr_reader :cinema, :booking_reader
+  attr_reader :cinema, :booking_reader, :booking_requests
 
   def initialize(cinema, booking_reader)
     @cinema = cinema
     @booking_reader = booking_reader
-  end
-
-  def booking_requests
-    @booking_reader.bookings
+    @booking_requests = @booking_reader.bookings
   end
 
   def max_booking
@@ -29,30 +26,29 @@ class BookingSystem
     cinema.seat_booked?(row, seat)
   end
 
-  def is_request_valid?(booking_id)
-    booking_reader.bookings[booking_id].valid?
+  def within_seat_limit?(booking)
+    last_seat >= booking.seats[:seats].last
   end
 
-  def within_seat_limit?(booking_id)
-    last_seat >= booking_reader.bookings[booking_id].booking_info[:lastseat]
+  def within_row_limit?(booking)
+    last_row >= booking.seats[:row]
   end
 
-  def within_row_limit?(booking_id)
-    last_row >= booking_reader.bookings[booking_id].booking_info[:endrow]
+  def within_max?(booking)
+    MAXIMUM_BOOKING >= booking.number_of_seats
   end
 
-  def within_max?(booking_id)
-    MAXIMUM_BOOKING >= booking_reader.bookings[booking_id].number_of_seats
-  end
-
-  def all_seats_free?(booking_id)
-    booking_hash = booking_reader.bookings[booking_id].final_info
-    seats = cinema.rows[booking_hash[:row]].seats[booking_hash[:seats]]
+  def all_seats_free?(booking)
+    seats = cinema.rows[booking.seats[:row]].seats[booking.seats[:seats]]
     seats.all? { |seat| seat.booked? == false }
   end
 
   # def no_single_seats?(booking_id)
   #    = booking_reader.bookings[booking_id].seats
+  # end
+
+  # def is_request_valid?(booking)
+  #   booking.valid?
   # end
 
   # def book_seat(row, seat)

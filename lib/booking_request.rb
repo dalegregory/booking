@@ -31,6 +31,11 @@ class BookingRequest
     necessary_fields? && valid_id? && single_row? && ascending_order?
   end
 
+  # def seat_info 
+  #   if valid?
+  #     hash = { :seats =>  }
+  # end
+
   def seat_info
     if valid?
       range = (@booking_info[:firstseat]..@booking_info[:lastseat])
