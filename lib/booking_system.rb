@@ -46,34 +46,46 @@ class BookingSystem
   def seats_free_right?(booking)
     seats = booking.seats
     row = cinema.rows[seats[:row]].seats
-    !row[seats[:one_right]].booked? && !row[seats[:two_right]].booked?
+    (!row[seats[:one_right]].booked? && !row[seats[:two_right]].booked?)
   end
 
   def seats_free_left?(booking)
     seats = booking.seats
     row = cinema.rows[seats[:row]].seats
-    !row[seats[:one_left]].booked? && !row[seats[:two_left]].booked?    
+    (!row[seats[:one_left]].booked? && !row[seats[:two_left]].booked?)
   end
 
   def left_seat_booked?(booking)
     seats = booking.seats
-    seat = cinema.rows[seats[:row]].seats[seats[:one_left]]
-    seat.booked? || seats[:one_left] == -1
+    left_seat = seats[:one_left]
+    seat = cinema.rows[seats[:row]].seats[left_seat]
+    seat.booked? || left_seat == -1
   end
 
   def right_seat_booked?(booking)
     seats = booking.seats
-    seat = cinema.rows[seats[:row]].seats[seats[:one_right]]
-    seat.booked? || seats[:one_right] > last_seat
+    right_seat = seats[:one_right]
+    seat = cinema.rows[seats[:row]].seats[right_seat]
+    seat.booked? || right_seat > last_seat
   end
+
+  def rejected
+    @rejected || []
+  end
+
+  def final_check(booking)
+    within_max?(booking) && within_seat_limit?(booking) && within_row_limit?(booking) && all_seats_free?(booking) && (seats_free_left?(booking) || left_seat_booked?(booking)) && (seats_free_right?(booking) || right_seat_booked?(booking))
+  end
+
+  # def make_bookings
+  #   @booking_requests.each do |booking|
+  #     if booking.valid? && 
+  #   end
+  # end
 
 
   # def no_single_seats?(booking_id)
   #    = booking_reader.bookings[booking_id].seats
-  # end
-
-  # def is_request_valid?(booking)
-  #   booking.valid?
   # end
 
   # def book_seat(row, seat)

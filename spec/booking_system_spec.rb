@@ -19,7 +19,7 @@ describe 'BookingSystem' do
                                                             :number_of_seats => 7 } 
 
   before(:each) do 
-    booking_request_reader.process_file("./data/test_booking_requests")
+    booking_request_reader.process_file("./data/sample_booking_requests")
     booking_request_reader.format_bookings
     booking_request_reader.create_bookings 
   end                                                                           
@@ -31,7 +31,7 @@ describe 'BookingSystem' do
   end
 
   it 'can access each BookingRequest' do
-    expect(booking_system.booking_requests.count).to eq 5
+    expect(booking_system.booking_requests.count).to eq 500
   end
 
   it 'has a MAXIMUM_BOOKING' do
@@ -52,11 +52,6 @@ describe 'BookingSystem' do
     cinema.rows[3].seats[2].book!
     expect(booking_system.seat_booked?(4,3)).to eq true
   end
-
-  # it 'can check internal validity of a BookingRequest' do
-  #   expect(booking_system.is_request_valid?(valid_booking)).to be true
-  #   # expect(booking_system.is_request_valid?(1)).to be false
-  # end
 
   it 'can check the if a BookingRequest is within the seat limit' do
     expect(booking_system.within_seat_limit?(valid_booking)).to be true
@@ -102,6 +97,19 @@ describe 'BookingSystem' do
     cinema.rows[77].seats[25].book!
     expect(booking_system.right_seat_booked?(valid_booking)).to eq true
   end
+
+  it 'can check the rejected bookings' do
+    expect(booking_system.rejected).to eq []
+  end
+
+  it 'can check the validity of a booking against the cinema' do
+    expect(booking_system.final_check(valid_booking)).to eq true
+  end
+
+  # it 'can make bookings' do
+  #   booking_system.make_bookings
+  #   expect(booking_system.rejected.count).to eq 11
+  # end
 
   # it 'can make sure there are no single seats left' do
   #   expect(booking_system.no_single_seats?(0)).to be true
