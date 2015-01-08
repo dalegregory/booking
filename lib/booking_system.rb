@@ -9,6 +9,10 @@ class BookingSystem
     @booking_reader = booking_reader
   end
 
+  def booking_requests
+    @booking_reader.bookings
+  end
+
   def max_booking
     MAXIMUM_BOOKING
   end

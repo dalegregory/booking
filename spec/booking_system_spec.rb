@@ -21,6 +21,10 @@ describe 'BookingSystem' do
     expect(booking_system.booking_reader).to eq booking_request_reader
   end
 
+  it 'can access each BookingRequest' do
+    expect(booking_system.booking_requests.count).to eq 5
+  end
+
   it 'has a MAXIMUM_BOOKING' do
     expect(booking_system.max_booking).to eq 5
   end
