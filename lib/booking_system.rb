@@ -43,6 +43,31 @@ class BookingSystem
     seats.all? { |seat| seat.booked? == false }
   end
 
+  def seats_free_right?(booking)
+    seats = booking.seats
+    row = cinema.rows[seats[:row]].seats
+    !row[seats[:one_right]].booked? && !row[seats[:two_right]].booked?
+  end
+
+  def seats_free_left?(booking)
+    seats = booking.seats
+    row = cinema.rows[seats[:row]].seats
+    !row[seats[:one_left]].booked? && !row[seats[:two_left]].booked?    
+  end
+
+  def left_seat_booked?(booking)
+    seats = booking.seats
+    seat = cinema.rows[seats[:row]].seats[seats[:one_left]]
+    seat.booked? || seats[:one_left] == -1
+  end
+
+  def right_seat_booked?(booking)
+    seats = booking.seats
+    seat = cinema.rows[seats[:row]].seats[seats[:one_right]]
+    seat.booked? || seats[:one_right] > last_seat
+  end
+
+
   # def no_single_seats?(booking_id)
   #    = booking_reader.bookings[booking_id].seats
   # end
