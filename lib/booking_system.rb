@@ -70,9 +70,8 @@ class BookingSystem
   def right_seat_booked?(booking)
     seats = booking.seats
     right_seat = seats[:one_right]
-    if seat = cinema.rows[seats[:row]].seats[right_seat]
-      right_seat > last_seat || seat.booked? 
-    end
+    seat = cinema.rows[seats[:row]].seats[right_seat]
+    seat == nil || seat.booked?
   end
 
   def final_check(booking)

@@ -17,6 +17,8 @@ describe 'BookingSystem' do
   let(:invalid_booking)         { double :booking_request,  :valid? => false, 
                                                             :seats => ({ :row => 101, :seats => 49..55}), 
                                                             :number_of_seats => 7 } 
+  let(:end_row)                 { double :booking_request,  :valid? => true,
+                                                            :seats => ({:row => 1, :seats => 48..49, :one_right => 25})}                                                     
 
   before(:each) do 
     booking_request_reader.process_file("./data/sample_booking_requests")
@@ -96,6 +98,7 @@ describe 'BookingSystem' do
     expect(booking_system.right_seat_booked?(valid_booking)).to eq false
     cinema.rows[77].seats[25].book!
     expect(booking_system.right_seat_booked?(valid_booking)).to eq true
+    # expect(booking_system.right_seat_booked?(end_row)).to eq true
   end
 
   it 'can check the rejected bookings' do
