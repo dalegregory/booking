@@ -48,9 +48,9 @@ describe 'BookingSystem' do
 
 
   it 'can check the status of a specified seat' do
-    expect(booking_system.seat_booked?(4,3)).to eq false
+    expect(booking_system.seat_booked?(3,2)).to eq false
     cinema.rows[3].seats[2].book!
-    expect(booking_system.seat_booked?(4,3)).to eq true
+    expect(booking_system.seat_booked?(3,2)).to eq true
   end
 
   it 'can check the if a BookingRequest is within the seat limit' do
@@ -106,28 +106,14 @@ describe 'BookingSystem' do
     expect(booking_system.final_check(valid_booking)).to eq true
   end
 
-  # it 'can make bookings' do
-  #   booking_system.make_bookings
-  #   expect(booking_system.rejected.count).to eq 11
-  # end
+  it 'can book the requested seats from a BookingRequest' do
+    booking_system.book_seats(valid_booking)
+    expect(booking_system.seat_booked?(77,23)).to be true
+  end
 
-  # it 'can make sure there are no single seats left' do
-  #   expect(booking_system.no_single_seats?(0)).to be true
-  #   cinema.rows[77].seats[26].book!
-  #   expect(booking_system.no_single_seats?(0)).to be false
-  # end
-
-  # it 'can book a seat' do
-  #   expect(booking_system.seat_booked?(1,4)).to be false
-  #   booking_system.book_seat(1,4)
-  #   expect(booking_system.seat_booked?(1,4)).to be true
-  # end
-
-  # it 'can only book a seat if there is room' do
-  #   booking_system.book_seat(1,4)
-  #   expect(booking_system.seat_booked?(1,4)).to be true
-  #   expect(booking_system.book_seat(1,4)).to be false
-  # end
-
+  it 'can make bookings' do
+    booking_system.make_bookings
+    expect(booking_system.rejected.count).to eq 11
+  end
 
 end

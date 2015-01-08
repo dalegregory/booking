@@ -2,12 +2,13 @@ class BookingSystem
 
   MAXIMUM_BOOKING = 5
 
-  attr_reader :cinema, :booking_reader, :booking_requests
+  attr_reader :cinema, :booking_reader, :booking_requests, :rejected
 
   def initialize(cinema, booking_reader)
     @cinema = cinema
     @booking_reader = booking_reader
     @booking_requests = @booking_reader.bookings
+    @rejected = []
   end
 
   def max_booking
@@ -46,13 +47,17 @@ class BookingSystem
   def seats_free_right?(booking)
     seats = booking.seats
     row = cinema.rows[seats[:row]].seats
-    (!row[seats[:one_right]].booked? && !row[seats[:two_right]].booked?)
+    if row[seats[:one_right]] && row[seats[:two_right]] != nil
+      (!row[seats[:one_right]].booked? && !row[seats[:two_right]].booked?)
+    end
   end
 
   def seats_free_left?(booking)
     seats = booking.seats
     row = cinema.rows[seats[:row]].seats
-    (!row[seats[:one_left]].booked? && !row[seats[:two_left]].booked?)
+    if row[seats[:one_left]] && row[seats[:two_left]] != nil
+      (!row[seats[:one_left]].booked? && !row[seats[:two_left]].booked?)
+    end
   end
 
   def left_seat_booked?(booking)
@@ -65,36 +70,29 @@ class BookingSystem
   def right_seat_booked?(booking)
     seats = booking.seats
     right_seat = seats[:one_right]
-    seat = cinema.rows[seats[:row]].seats[right_seat]
-    seat.booked? || right_seat > last_seat
-  end
-
-  def rejected
-    @rejected || []
+    if seat = cinema.rows[seats[:row]].seats[right_seat]
+      right_seat > last_seat || seat.booked? 
+    end
   end
 
   def final_check(booking)
-    within_max?(booking) && within_seat_limit?(booking) && within_row_limit?(booking) && all_seats_free?(booking) && (seats_free_left?(booking) || left_seat_booked?(booking)) && (seats_free_right?(booking) || right_seat_booked?(booking))
+    booking.valid? && within_max?(booking) && within_seat_limit?(booking) && within_row_limit?(booking) && all_seats_free?(booking) && (seats_free_left?(booking) || left_seat_booked?(booking)) && (seats_free_right?(booking) || right_seat_booked?(booking))
   end
 
-  # def make_bookings
-  #   @booking_requests.each do |booking|
-  #     if booking.valid? && 
-  #   end
-  # end
+  def book_seats(booking)
+    hash = booking.seats
+    cinema_seats = cinema.rows[hash[:row]].seats
+    hash[:seats].each {|seat| cinema_seats[seat].book! }
+  end
 
-
-  # def no_single_seats?(booking_id)
-  #    = booking_reader.bookings[booking_id].seats
-  # end
-
-  # def book_seat(row, seat)
-  #   seat_to_book = cinema.rows[row-1].seats[seat-1]
-  #   if seat_to_book.booked? == false
-  #     seat_to_book.book! 
-  #   else
-  #     false
-  #   end
-  # end
-
+  def make_bookings
+    @booking_requests.each do | request |
+      if final_check(request)
+        book_seats(request)
+      else
+        @rejected << request
+      end
+    end
+  end
+  
 end

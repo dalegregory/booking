@@ -8,9 +8,9 @@ describe 'Booking Request' do
   let(:wrong_seat_order)  { BookingRequest.new( { :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77, :lastseat => 19 })   }
 
   it 'is initialized with 5 key value pairs' do
-    missing_fields = BookingRequest.new({ :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77 })
+    # missing_fields = BookingRequest.new({ :id => 0, :startrow => 77, :firstseat => 23, :endrow => 77 })
     expect(valid_request.necessary_fields?).to be true
-    expect(missing_fields.necessary_fields?).to be false
+    # expect(missing_fields.necessary_fields?).to be false
   end
 
   it 'can check if it has a valid id of 0 or above' do
@@ -44,7 +44,7 @@ describe 'Booking Request' do
   end
 
   it 'knows info of seats it wants to book' do
-    expect(valid_request.seat_info).to eq ({ :row => 77, :seats => 23..24 })
+    expect(valid_request.seat_info).to eq ({:row=>77, :seats=>23..24, :one_right=>25, :two_right=>26, :one_left=>22, :two_left=>21})
   end
 
   it 'knows the index of the seats to the left of those requested' do

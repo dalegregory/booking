@@ -1,6 +1,6 @@
 class BookingRequest
 
-  attr_accessor :booking_info, :final_info
+  attr_accessor :booking_info, :seats
 
   def initialize(hash)
     @booking_info = hash
@@ -24,7 +24,7 @@ class BookingRequest
   end
 
   def number_of_seats
-    @seats = @booking_info[:lastseat] - @booking_info[:firstseat] + 1
+    @booking_info[:lastseat] - @booking_info[:firstseat] + 1
   end
 
   def valid?
@@ -37,10 +37,10 @@ class BookingRequest
   # end
 
   def seat_info
-    if valid?
-      range = (@booking_info[:firstseat]..@booking_info[:lastseat])
-      @final_info = { :row => @booking_info[:startrow], :seats => range }
-    end
+    range = (@booking_info[:firstseat]..@booking_info[:lastseat])
+    first = range.first
+    last = range.last
+    @seats = { :row => @booking_info[:startrow], :seats => range, :one_right => last + 1, :two_right => last + 2, :one_left => first -1, :two_left => first -2 }
   end
 
 end

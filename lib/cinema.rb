@@ -17,7 +17,7 @@ class Cinema
   end
 
   def seat_booked?(row, seat)
-    @rows[row-1].seats[seat-1].booked?
+    @rows[row].seats[seat].booked?
   end
 
 end
