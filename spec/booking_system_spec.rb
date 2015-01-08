@@ -8,12 +8,15 @@ describe 'BookingSystem' do
   let(:booking_request_reader)  { BookingRequestReader.new }
   let(:booking_system)          { BookingSystem.new(cinema, booking_request_reader) }
   let(:valid_booking)           { double :booking_request,  :valid? => true, 
-                                                            :seats => ({ :row => 77, :seats => 23..24, 
-                                                            :one_right => 25,
-                                                            :two_right => 26,
-                                                            :one_left => 22,
-                                                            :two_left => 21}),
-                                                            :number_of_seats => 2 }
+                                                            :seats => ({  :row => 77, 
+                                                                          :seats => 23..24, 
+                                                                          :one_right => 25,
+                                                                          :two_right => 26,
+                                                                          :one_left => 22,
+                                                                          :two_left => 21,
+                                                                          :both_left => 19..20,
+                                                                          :both_right => 23..24}),
+                                                                          :number_of_seats => 2}
   let(:invalid_booking)         { double :booking_request,  :valid? => false, 
                                                             :seats => ({ :row => 101, :seats => 49..55}), 
                                                             :number_of_seats => 7 } 
@@ -83,9 +86,9 @@ describe 'BookingSystem' do
   end
 
   it 'can check that there are two seats left unbooked either side' do
-    expect(booking_system.seats_free_left?(valid_booking)).to eq true
+    expect(booking_system.seats_free_left?(77, 21..22)).to eq true
     cinema.rows[77].seats[22].book!
-    expect(booking_system.seats_free_left?(valid_booking)).to eq false
+    expect(booking_system.seats_free_left?(77, 21..22)).to eq false
   end
 
   it 'can check if the left seat is booked or end of row' do

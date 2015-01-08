@@ -40,12 +40,8 @@ class BookingSystem
   end
 
   def all_seats_free?(row, seats)
-    # hash = booking.seats
     seats = cinema.rows[row].seats[seats]
     seats.all? { |seat| seat.booked? == false }
-    # cinema.seat_booked?(hash.row, hash.seats)
-    # hash[:seats].to_a.all? {|seat| cinema.seat_booked?(hash[:row], seat) == false}
-
   end
 
   def seats_free_right?(booking)
@@ -58,10 +54,10 @@ class BookingSystem
     end
   end
 
-  def seats_free_left?(booking)
-    seats = booking.seats
-    row = cinema.rows[seats[:row]].seats
-    (!row[seats[:one_left]].booked? && !row[seats[:two_left]].booked?)
+  def seats_free_left?(row, seats)
+    # seats = booking.seats
+    seats = cinema.rows[row].seats[seats]
+    seats.all? {|seat| !seat.booked? }
   end
 
   def left_seat_booked?(booking)
@@ -80,7 +76,14 @@ class BookingSystem
 
   def final_check(booking)
     hash = booking.seats
-    booking.valid? && within_max?(booking) && within_seat_limit?(booking) && within_row_limit?(booking) && all_seats_free?(hash[:row], hash[:seats]) && (seats_free_left?(booking) || left_seat_booked?(booking)) && (seats_free_right?(booking) || right_seat_booked?(booking))
+    row = hash[:row]
+    booking.valid? &&
+    within_max?(booking) &&
+    within_seat_limit?(booking) &&
+    within_row_limit?(booking) &&
+    all_seats_free?(row, hash[:seats]) &&
+    (seats_free_left?(row, hash[:both_left]) || left_seat_booked?(booking)) &&
+    (seats_free_right?(booking) || right_seat_booked?(booking))
   end
 
   def book_seats(booking)

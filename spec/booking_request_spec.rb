@@ -44,7 +44,7 @@ describe 'Booking Request' do
   end
 
   it 'knows info of seats it wants to book' do
-    expect(valid_request.seat_info).to eq ({:row=>77, :seats=>23..24, :one_right=>25, :two_right=>26, :one_left=>22, :two_left=>21})
+    expect(valid_request.seat_info).to eq ({:row=>77, :seats=>23..24, :one_right=>25, :two_right=>26, :one_left=>22, :two_left=>21, :both_left => 21..22, :both_right => 25..26})
   end
 
   it 'knows the index of the seats to the left of those requested' do
