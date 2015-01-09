@@ -2,7 +2,7 @@ class BookingSystem
 
   MAXIMUM_BOOKING = 5
 
-  attr_reader :cinema, :booking_reader, :booking_requests, :rejected
+  attr_reader :cinema, :booking_reader, :booking_requests, :rejected, :current_booking
 
   def initialize(cinema, booking_reader)
     max_booking
@@ -10,6 +10,10 @@ class BookingSystem
     @booking_reader = booking_reader
     @booking_requests = @booking_reader.bookings
     @rejected = []
+  end
+
+  def store_booking(booking)
+    @current_booking = booking.seats
   end
 
   def max_booking
@@ -40,8 +44,9 @@ class BookingSystem
     @maximum_booking >= booking.number_of_seats
   end
 
-  def all_seats_free?(row, seats)
-    seats = cinema.get_seat(row, seats)
+  def all_seats_free?(booking)
+    store_booking(booking)
+    seats = cinema.get_seat(@current_booking[:row], @current_booking[:seats])
     seats.all? { |seat| seat.booked? == false }
   end
 
@@ -61,8 +66,8 @@ class BookingSystem
   end
 
   def right_seat_booked?(booking)
-    seats = booking.seats
-    cinema.seat_booked?(seats[:row], seats[:one_right])
+    store_booking(booking)
+    cinema.seat_booked?(@current_booking[:row], @current_booking[:one_right])
   end
 
   def final_check(booking)
@@ -72,7 +77,7 @@ class BookingSystem
     within_max?(booking) &&
     within_seat_limit?(booking) &&
     within_row_limit?(booking) &&
-    all_seats_free?(row, hash[:seats]) &&
+    all_seats_free?(booking) &&
     (seats_free_left?(row, hash[:both_left]) || left_seat_booked?(booking)) &&
     (seats_free_right?(row, hash[:both_right]) || right_seat_booked?(booking))
   end

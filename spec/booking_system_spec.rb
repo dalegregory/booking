@@ -35,6 +35,11 @@ describe 'BookingSystem' do
     expect(booking_system.booking_reader).to eq booking_request_reader
   end
 
+  it 'has a single BookingRequests information stored an accessible at any one time' do
+    booking_system.store_booking(valid_booking)
+    expect(booking_system.current_booking[:row]).to eq 77
+  end
+
   it 'can access each BookingRequest' do
     expect(booking_system.booking_requests.count).to eq 500
   end
@@ -74,9 +79,9 @@ describe 'BookingSystem' do
   end
 
   it 'can check the if all the seats requested are unbooked' do
-    expect(booking_system.all_seats_free?(77, 22..24)).to be true
+    expect(booking_system.all_seats_free?(valid_booking)).to be true
     cinema.rows[77].seats[23].book!
-    expect(booking_system.all_seats_free?(77, 22..24)).to be false
+    expect(booking_system.all_seats_free?(valid_booking)).to be false
   end
 
   it 'can check that there are two seats left unbooked either side' do
