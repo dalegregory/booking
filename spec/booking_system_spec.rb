@@ -14,8 +14,8 @@ describe 'BookingSystem' do
                                                                           :two_right => 26,
                                                                           :one_left => 22,
                                                                           :two_left => 21,
-                                                                          :both_left => 19..20,
-                                                                          :both_right => 23..24}),
+                                                                          :both_left => 21..22,
+                                                                          :both_right => 25..26}),
                                                                           :number_of_seats => 2}
   let(:invalid_booking)         { double :booking_request,  :valid? => false, 
                                                             :seats => ({ :row => 101, :seats => 49..55}), 
@@ -93,15 +93,17 @@ describe 'BookingSystem' do
   end
 
   it 'can check that there are two seats left unbooked either side' do
-    expect(booking_system.seats_free_right?(77, 25..26)).to eq true
+    booking_system.store_booking(valid_booking)
+    expect(booking_system.seats_free_right?).to eq true
     cinema.rows[77].seats[26].book!
-    expect(booking_system.seats_free_right?(77, 25..26)).to eq false
+    expect(booking_system.seats_free_right?).to eq false
   end
 
   it 'can check that there are two seats left unbooked either side' do
-    expect(booking_system.seats_free_left?(77, 21..22)).to eq true
-    cinema.rows[77].seats[22].book!
-    expect(booking_system.seats_free_left?(77, 21..22)).to eq false
+    booking_system.store_booking(valid_booking)
+    expect(booking_system.seats_free_left?).to eq true
+    cinema.rows[77].seats[21].book!
+    expect(booking_system.seats_free_left?).to eq false
   end
 
   it 'can check if the left seat is booked or end of row' do

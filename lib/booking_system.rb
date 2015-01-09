@@ -47,16 +47,16 @@ class BookingSystem
 
   def all_seats_free?
     seats = cinema.get_seat(@current_booking[:row], @current_booking[:seats])
-    seats.all? { |seat| seat.booked? == false }
+    seats.all? { |seat| !seat.booked? }
   end
 
-  def seats_free_right?(row, seats)
-    seats = cinema.get_seat(row, seats)
+  def seats_free_right?
+    seats = cinema.get_seat(@current_booking[:row], @current_booking[:both_right])
     seats.all? {|seat| !seat.booked? }
   end
 
-  def seats_free_left?(row, seats)
-    seats = cinema.rows[row].seats[seats]
+  def seats_free_left?
+    seats = cinema.get_seat(@current_booking[:row], @current_booking[:both_left])
     seats.all? {|seat| !seat.booked? }
   end
 
@@ -76,8 +76,8 @@ class BookingSystem
     within_seat_limit? &&
     within_row_limit? &&
     all_seats_free? &&
-    (seats_free_left?(row, @current_booking[:both_left]) || left_seat_booked?) &&
-    (seats_free_right?(row, @current_booking[:both_right]) || right_seat_booked?)
+    (seats_free_left? || left_seat_booked?) &&
+    (seats_free_right? || right_seat_booked?)
   end
 
   def book_seats
