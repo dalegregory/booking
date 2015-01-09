@@ -5,7 +5,6 @@ class Cinema
   def initialize(rows = 100, seats = 50)
     @rows = []
     rows.times { @rows << Row.new(seats) }
-    # @rows = Array.new(rows, Row.new(seats))
   end
 
   def row_count
@@ -18,6 +17,10 @@ class Cinema
 
   def seat_booked?(row, seat)
     @rows[row].seats[seat].booked?
+  end
+
+  def get_seat(row, seat)
+    @rows[row].seats[seat]
   end
 
 end

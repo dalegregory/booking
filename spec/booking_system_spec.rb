@@ -80,9 +80,9 @@ describe 'BookingSystem' do
   end
 
   it 'can check that there are two seats left unbooked either side' do
-    expect(booking_system.seats_free_right?(valid_booking)).to eq true
+    expect(booking_system.seats_free_right?(77, 25..26)).to eq true
     cinema.rows[77].seats[26].book!
-    expect(booking_system.seats_free_right?(valid_booking)).to eq false
+    expect(booking_system.seats_free_right?(77, 25..26)).to eq false
   end
 
   it 'can check that there are two seats left unbooked either side' do

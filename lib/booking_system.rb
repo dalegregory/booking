@@ -5,6 +5,7 @@ class BookingSystem
   attr_reader :cinema, :booking_reader, :booking_requests, :rejected
 
   def initialize(cinema, booking_reader)
+    max_booking
     @cinema = cinema
     @booking_reader = booking_reader
     @booking_requests = @booking_reader.bookings
@@ -12,7 +13,7 @@ class BookingSystem
   end
 
   def max_booking
-    MAXIMUM_BOOKING
+    @maximum_booking = MAXIMUM_BOOKING
   end
 
   def last_row
@@ -36,42 +37,32 @@ class BookingSystem
   end
 
   def within_max?(booking)
-    MAXIMUM_BOOKING >= booking.number_of_seats
+    @maximum_booking >= booking.number_of_seats
   end
 
   def all_seats_free?(row, seats)
-    seats = cinema.rows[row].seats[seats]
+    seats = cinema.get_seat(row, seats)
     seats.all? { |seat| seat.booked? == false }
   end
 
-  def seats_free_right?(booking)
-    seats = booking.seats
-    row = cinema.rows[seats[:row]].seats
-    one = row[seats[:one_right]]
-    two = row[seats[:two_right]]
-    if one && two != nil
-      (!one.booked? && !two.booked?)
-    end
+  def seats_free_right?(row, seats)
+    seats = cinema.get_seat(row, seats)
+    seats.all? {|seat| !seat.booked? }
   end
 
   def seats_free_left?(row, seats)
-    # seats = booking.seats
     seats = cinema.rows[row].seats[seats]
     seats.all? {|seat| !seat.booked? }
   end
 
   def left_seat_booked?(booking)
     seats = booking.seats
-    left_seat = seats[:one_left]
-    seat = cinema.rows[seats[:row]].seats[left_seat]
-    seat.booked? || left_seat == -1
+    cinema.seat_booked?(seats[:row], seats[:one_left])
   end
 
   def right_seat_booked?(booking)
     seats = booking.seats
-    right_seat = seats[:one_right]
-    seat = cinema.rows[seats[:row]].seats[right_seat]
-    seat == nil || seat.booked?
+    cinema.seat_booked?(seats[:row], seats[:one_right])
   end
 
   def final_check(booking)
@@ -83,7 +74,7 @@ class BookingSystem
     within_row_limit?(booking) &&
     all_seats_free?(row, hash[:seats]) &&
     (seats_free_left?(row, hash[:both_left]) || left_seat_booked?(booking)) &&
-    (seats_free_right?(booking) || right_seat_booked?(booking))
+    (seats_free_right?(row, hash[:both_right]) || right_seat_booked?(booking))
   end
 
   def book_seats(booking)

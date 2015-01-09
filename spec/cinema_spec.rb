@@ -37,6 +37,10 @@ describe 'Cinema:' do
       expect(cinema.seat_booked?(1,0)).to eq false
     end
 
+    it 'can access a seat' do
+      expect(cinema.get_seat(1,0).class).to eq Seat
+    end
+
   end
 
 end
