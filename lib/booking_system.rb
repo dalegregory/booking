@@ -32,8 +32,9 @@ class BookingSystem
     cinema.seat_booked?(row, seat)
   end
 
-  def within_seat_limit?(booking)
-    last_seat >= booking.seats[:seats].last
+  def within_seat_limit?
+    last_seat >= @current_booking[:seats].last
+    # @current_booking[:seats].last
   end
 
   def within_row_limit?(booking)
@@ -75,7 +76,7 @@ class BookingSystem
     row = hash[:row]
     booking.valid? &&
     within_max?(booking) &&
-    within_seat_limit?(booking) &&
+    within_seat_limit? &&
     within_row_limit?(booking) &&
     all_seats_free?(booking) &&
     (seats_free_left?(row, hash[:both_left]) || left_seat_booked?(booking)) &&
