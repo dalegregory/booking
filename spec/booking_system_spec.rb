@@ -38,6 +38,7 @@ describe 'BookingSystem' do
   it 'has a single BookingRequests information stored an accessible at any one time' do
     booking_system.store_booking(valid_booking)
     expect(booking_system.current_booking[:row]).to eq 77
+    puts booking_system.current_booking
   end
 
   it 'can access each BookingRequest' do
@@ -71,19 +72,24 @@ describe 'BookingSystem' do
   end
 
   it 'can check if a BookingRequest is within the row limit' do
-    expect(booking_system.within_row_limit?(valid_booking)).to be true
-    expect(booking_system.within_row_limit?(invalid_booking)).to be false
+    booking_system.store_booking(valid_booking)
+    expect(booking_system.within_row_limit?).to be true
+    booking_system.store_booking(invalid_booking)
+    expect(booking_system.within_row_limit?).to be false
   end
 
   it 'can check if a BookingRequest is within the MAXIMUM_BOOKING limit' do
-    expect(booking_system.within_max?(valid_booking)).to be true
-    expect(booking_system.within_max?(invalid_booking)).to be false
+    booking_system.store_booking(valid_booking)
+    expect(booking_system.within_max?).to be true
+    booking_system.store_booking(invalid_booking)
+    expect(booking_system.within_max?).to be false
   end
 
   it 'can check the if all the seats requested are unbooked' do
-    expect(booking_system.all_seats_free?(valid_booking)).to be true
+    booking_system.store_booking(valid_booking)
+    expect(booking_system.all_seats_free?).to be true
     cinema.rows[77].seats[23].book!
-    expect(booking_system.all_seats_free?(valid_booking)).to be false
+    expect(booking_system.all_seats_free?).to be false
   end
 
   it 'can check that there are two seats left unbooked either side' do
@@ -99,15 +105,17 @@ describe 'BookingSystem' do
   end
 
   it 'can check if the left seat is booked or end of row' do
-    expect(booking_system.left_seat_booked?(valid_booking)).to eq false
+    booking_system.store_booking(valid_booking)
+    expect(booking_system.left_seat_booked?).to eq false
     cinema.rows[77].seats[22].book!
-    expect(booking_system.left_seat_booked?(valid_booking)).to eq true
+    expect(booking_system.left_seat_booked?).to eq true
   end
 
   it 'can check if the right seat is booked or end of row' do
-    expect(booking_system.right_seat_booked?(valid_booking)).to eq false
+    booking_system.store_booking(valid_booking)
+    expect(booking_system.right_seat_booked?).to eq false
     cinema.rows[77].seats[25].book!
-    expect(booking_system.right_seat_booked?(valid_booking)).to eq true
+    expect(booking_system.right_seat_booked?).to eq true
     # expect(booking_system.right_seat_booked?(end_row)).to eq true
   end
 
@@ -116,11 +124,12 @@ describe 'BookingSystem' do
   end
 
   it 'can check the validity of a booking against the cinema' do
-    expect(booking_system.final_check(valid_booking)).to eq true
+    expect(booking_system.final_check(valid_booking)).to eq true  
   end
 
   it 'can book the requested seats from a BookingRequest' do
-    booking_system.book_seats(valid_booking)
+    booking_system.store_booking(valid_booking)
+    booking_system.book_seats
     expect(booking_system.seat_booked?(77,23)).to be true
   end
 

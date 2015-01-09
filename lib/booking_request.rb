@@ -42,7 +42,7 @@ class BookingRequest
                 :one_left => first -1, 
                 :two_left => first -2, 
                 :both_left => (first -2..first -1), 
-                :both_right => (last +1..last +2) }
+                :both_right => (last +1..last +2)}
   end
 
 end
