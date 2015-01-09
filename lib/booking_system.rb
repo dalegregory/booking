@@ -34,7 +34,6 @@ class BookingSystem
 
   def within_seat_limit?
     last_seat >= @current_booking[:seats].last
-    # @current_booking[:seats].last
   end
 
   def within_row_limit?
@@ -70,7 +69,6 @@ class BookingSystem
 
   def final_check(booking)
     store_booking(booking)
-    row = @current_booking[:row]
     booking.valid? &&
     within_max? &&
     within_seat_limit? &&

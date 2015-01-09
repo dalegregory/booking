@@ -38,7 +38,6 @@ describe 'BookingSystem' do
   it 'has a single BookingRequests information stored an accessible at any one time' do
     booking_system.store_booking(valid_booking)
     expect(booking_system.current_booking[:row]).to eq 77
-    puts booking_system.current_booking
   end
 
   it 'can access each BookingRequest' do
@@ -118,7 +117,6 @@ describe 'BookingSystem' do
     expect(booking_system.right_seat_booked?).to eq false
     cinema.rows[77].seats[25].book!
     expect(booking_system.right_seat_booked?).to eq true
-    # expect(booking_system.right_seat_booked?(end_row)).to eq true
   end
 
   it 'can check the rejected bookings' do
