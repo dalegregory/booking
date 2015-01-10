@@ -10,18 +10,17 @@ describe 'BookingSystem' do
   let(:valid_booking)           { double :booking_request,  :valid? => true, 
                                                             :seats => ({  :row => 77, 
                                                                           :seats => 23..24, 
-                                                                          :one_right => 25,
-                                                                          :two_right => 26,
-                                                                          :one_left => 22,
-                                                                          :two_left => 21,
                                                                           :both_left => 21..22,
                                                                           :both_right => 25..26}),
                                                                           :number_of_seats => 2}
   let(:invalid_booking)         { double :booking_request,  :valid? => false, 
-                                                            :seats => ({ :row => 101, :seats => 49..55}), 
+                                                            :seats => ({  :row => 101, 
+                                                                          :seats => 49..55}), 
                                                             :number_of_seats => 7 } 
   let(:end_row)                 { double :booking_request,  :valid? => true,
-                                                            :seats => ({:row => 1, :seats => 48..49, :one_right => 25})}                                                     
+                                                            :seats => ({  :row => 1, 
+                                                                          :seats => 48..49, 
+                                                                          :one_right => 25})}                                                     
 
   before(:each) do 
     booking_request_reader.process_file("./data/sample_booking_requests")

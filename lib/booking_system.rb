@@ -60,19 +60,17 @@ class BookingSystem
   end
 
   def left_seat_booked?
-    cinema.seat_booked?(@current_booking[:row], @current_booking[:one_left])
+    cinema.seat_booked?(@current_booking[:row], @current_booking[:both_left].last)
   end
 
   def right_seat_booked?
-    cinema.seat_booked?(@current_booking[:row], @current_booking[:one_right])
+    cinema.seat_booked?(@current_booking[:row], @current_booking[:both_right].first)
   end
 
   def final_check(booking)
     store_booking(booking)
-    booking.valid? &&
-    within_max? &&
-    within_seat_limit? &&
-    within_row_limit? &&
+    booking.valid? && within_max? &&
+    within_seat_limit? && within_row_limit? &&
     all_seats_free? &&
     (seats_free_left? || left_seat_booked?) &&
     (seats_free_right? || right_seat_booked?)
@@ -88,7 +86,7 @@ class BookingSystem
       if final_check(request)
         book_seats
       else
-        @rejected << request
+        @rejected << request      
       end
     end
   end

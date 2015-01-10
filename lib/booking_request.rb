@@ -35,14 +35,8 @@ class BookingRequest
     range = (@booking_info[:firstseat]..@booking_info[:lastseat])
     first = range.first
     last = range.last
-    @seats = {  :row => @booking_info[:startrow], 
-                :seats => range, 
-                :one_right => last + 1, 
-                :two_right => last + 2, 
-                :one_left => first -1, 
-                :two_left => first -2, 
-                :both_left => (first -2..first -1), 
-                :both_right => (last +1..last +2)}
+    @seats = {  :row => @booking_info[:startrow], :seats => range, 
+                :both_left => (first -2..first -1), :both_right => (last +1..last +2)}
   end
 
 end
