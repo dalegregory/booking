@@ -8,7 +8,7 @@ class Row
   end
 
   def seat_count
-    @seats.length
+    seats.length
   end
 
 end

@@ -8,23 +8,23 @@ class BookingRequest
   end
 
   def necessary_fields?
-    @booking_info.size == 5
+    booking_info.size == 5
   end
 
   def valid_id?
-    @booking_info[:id] >= 0
+    booking_info[:id] >= 0
   end
 
   def single_row?
-    @booking_info[:startrow] == @booking_info[:endrow]
+    booking_info[:startrow] == booking_info[:endrow]
   end
 
   def ascending_order?
-    @booking_info[:firstseat] <= @booking_info[:lastseat]
+    booking_info[:firstseat] <= booking_info[:lastseat]
   end
 
   def number_of_seats
-    @booking_info[:lastseat] - @booking_info[:firstseat] + 1
+    booking_info[:lastseat] - booking_info[:firstseat] + 1
   end
 
   def valid?
@@ -32,10 +32,10 @@ class BookingRequest
   end
 
   def seat_info
-    range = (@booking_info[:firstseat]..@booking_info[:lastseat])
+    range = (booking_info[:firstseat]..booking_info[:lastseat])
     first = range.first
     last = range.last
-    @seats = {  :row => @booking_info[:startrow], :seats => range, 
+    @seats = {  :row => booking_info[:startrow], :seats => range, 
                 :both_left => (first -2..first -1), :both_right => (last +1..last +2)}
   end
 

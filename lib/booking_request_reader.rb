@@ -15,11 +15,11 @@ class BookingRequestReader
   end
     
   def format_bookings
-    @bookings.map! {|booking| process_booking(booking)}
+    bookings.map! {|booking| process_booking(booking)}
   end
 
   def create_bookings
-    @bookings.map! { |booking| booking = BookingRequest.new(booking) }
+    bookings.map! { |booking| booking = BookingRequest.new(booking) }
   end
 
 end

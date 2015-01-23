@@ -8,19 +8,19 @@ class Cinema
   end
 
   def row_count
-    @rows.length
+    rows.length
   end
 
   def seats_per_row
-    @rows[0].seat_count
+    rows[0].seat_count
   end
 
   def seat_booked?(row, seat)
-    @rows[row].seats[seat].booked?
+    rows[row].seats[seat].booked?
   end
 
   def get_seat(row, seat)
-    @rows[row].seats[seat]
+    rows[row].seats[seat]
   end
 
 end
