@@ -29,9 +29,9 @@ describe 'BookingSystem' do
   end                                                                           
 
 
-  it 'is intialized with a Cinema and a BookingRequestReader' do
+  it 'is intialized with a Cinema and BookingRequests' do
     expect(booking_system.cinema).to eq cinema
-    expect(booking_system.booking_reader).to eq booking_request_reader
+    expect(booking_system.booking_requests.first.booking_info[:id]).to eq 0
   end
 
   it 'has a single BookingRequests information stored an accessible at any one time' do
