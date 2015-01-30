@@ -45,17 +45,17 @@ class BookingSystem
 
   def all_seats_free?
     seats = cinema.get_seat(current_booking[:row], current_booking[:seats])
-    seats.all? { |seat| !seat.booked? }
+    seats_free?(seats)
   end
 
   def seats_free_right?
     seats = cinema.get_seat(current_booking[:row], current_booking[:both_right])
-    seats.all? {|seat| !seat.booked? }
+    seats_free?(seats)
   end
 
   def seats_free_left?
     seats = cinema.get_seat(current_booking[:row], current_booking[:both_left])
-    seats.all? {|seat| !seat.booked? }
+    seats_free?(seats)
   end
 
   def left_seat_booked?
@@ -88,6 +88,12 @@ class BookingSystem
         rejected << request      
       end
     end
+  end
+
+  private
+
+  def seats_free?(seats)
+    seats.all? {|seat| !seat.booked? }
   end
   
 end
