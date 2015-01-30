@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/repos/54cbc3b4e30ba02377001a44/badges/a35cdd53ab435c912ed4/gpa.svg)](https://codeclimate.com/repos/54cbc3b4e30ba02377001a44/feed)
+
 #Theatre booking system
 A test to develop a system to check booking requests for a Theatre.
 
