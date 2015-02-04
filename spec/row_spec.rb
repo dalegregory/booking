@@ -7,7 +7,7 @@ describe 'Row' do
     expect(row.seat_count).to eq 50
   end
 
-  it 'can be initialized with any number of rows' do
+  it 'can be initialized with any number of seats' do
     row = Row.new(75)
     expect(row.seat_count).to eq 75
   end
